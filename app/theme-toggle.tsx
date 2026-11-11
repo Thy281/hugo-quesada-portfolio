@@ -8,15 +8,11 @@ export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    const savedTheme = window.localStorage.getItem("portfolio-theme");
-    const initialTheme: Theme = savedTheme === "light" ? "light" : "dark";
-    document.documentElement.dataset.theme = initialTheme;
-    setTheme(initialTheme);
+    document.documentElement.dataset.theme = "dark";
   }, []);
 
   function selectTheme(nextTheme: Theme) {
     document.documentElement.dataset.theme = nextTheme;
-    window.localStorage.setItem("portfolio-theme", nextTheme);
     setTheme(nextTheme);
   }
 
