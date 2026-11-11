@@ -44,7 +44,7 @@ const languages: Record<Language, {
     contactTitle: "/Contact",
     certificationsTitle: "/Certifications",
     contactLabel: "Contact links",
-    footer: "Hugo Quesada · Portfolio 2026",
+    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶 · Portfolio 2026",
     backToTop: "BACK TO TOP ↑",
     navLabel: "Portfolio sections",
     languageTitle: "/Language",
@@ -72,7 +72,7 @@ const languages: Record<Language, {
     contactTitle: "/Contacto",
     certificationsTitle: "/Certificaciones",
     contactLabel: "Enlaces de contacto",
-    footer: "Hugo Quesada · Portafolio 2026",
+    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶 · Portafolio 2026",
     backToTop: "VOLVER ARRIBA ↑",
     navLabel: "Secciones del portafolio",
     languageTitle: "/Idioma",
@@ -100,7 +100,7 @@ const languages: Record<Language, {
     contactTitle: "/Contato",
     certificationsTitle: "/Certificações",
     contactLabel: "Links de contato",
-    footer: "Hugo Quesada · Portfólio 2026",
+    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶 · Portfólio 2026",
     backToTop: "VOLTAR AO TOPO ↑",
     navLabel: "Seções do portfólio",
     languageTitle: "/Linguagem",
@@ -197,7 +197,7 @@ export default function Home() {
             <Image src="/foto-perfil.jpeg" alt={language === "es" ? "Foto de Hugo Quesada" : language === "pt" ? "Foto de Hugo Quesada" : "Photo of Hugo Quesada"} width={80} height={80} priority />
           </div>
           <div className="identity-copy">
-            <h1>Hugo Quesada</h1>
+            <h1>𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶</h1>
             <p>{content.role}</p>
             <span>{content.country}</span>
           </div>
