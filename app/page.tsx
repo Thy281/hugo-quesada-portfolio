@@ -2,9 +2,26 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import ThemeToggle from "./theme-toggle";
 
 type Language = "en" | "es" | "pt";
+
+type ContributionDay = {
+  date: string;
+  count: number;
+  level: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+type HoveredContribution = {
+  text: string;
+  left: number;
+  top: number;
+};
 
 const languages: Record<Language, {
   role: string;
@@ -21,10 +38,14 @@ const languages: Record<Language, {
   githubTitle: string;
   githubNavTitle: string;
   githubDescription: string;
-  githubWindow: string;
+  githubTotalSingular: string;
+  githubTotalPlural: string;
+  githubWeekdays: { monday: string; wednesday: string; friday: string };
   activityLess: string;
   activityMore: string;
   githubProfile: string;
+  contributionSingular: string;
+  contributionPlural: string;
   contactPrompt: string;
   contactTitle: string;
   certificationsTitle: string;
@@ -52,15 +73,19 @@ const languages: Record<Language, {
     githubTitle: "/GitHub Activity",
     githubNavTitle: "/GitHub",
     githubDescription: "Daily contribution activity from the past year.",
-    githubWindow: "LAST 12 MONTHS",
+    githubTotalSingular: "contribution in the last year",
+    githubTotalPlural: "contributions in the last year",
+    githubWeekdays: { monday: "Mon", wednesday: "Wed", friday: "Fri" },
     activityLess: "Less",
     activityMore: "More",
     githubProfile: "View profile",
+    contributionSingular: "contribution",
+    contributionPlural: "contributions",
     contactPrompt: "./contact",
     contactTitle: "/Contact",
     certificationsTitle: "/Certifications",
     contactLabel: "Contact links",
-    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶 · Portfolio 2026",
+    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶",
     backToTop: "BACK TO TOP ↑",
     navLabel: "Portfolio sections",
     languageTitle: "/Language",
@@ -88,15 +113,19 @@ const languages: Record<Language, {
     githubTitle: "/Actividad en GitHub",
     githubNavTitle: "/GitHub",
     githubDescription: "Contribuciones diarias registradas durante el último año.",
-    githubWindow: "ÚLTIMOS 12 MESES",
+    githubTotalSingular: "contribución en el último año",
+    githubTotalPlural: "contribuciones en el último año",
+    githubWeekdays: { monday: "lun", wednesday: "mié", friday: "vie" },
     activityLess: "Menos",
     activityMore: "Más",
     githubProfile: "Ver perfil",
+    contributionSingular: "contribución",
+    contributionPlural: "contribuciones",
     contactPrompt: "./contacto",
     contactTitle: "/Contacto",
     certificationsTitle: "/Certificaciones",
     contactLabel: "Enlaces de contacto",
-    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶 · Portafolio 2026",
+    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶",
     backToTop: "VOLVER ARRIBA ↑",
     navLabel: "Secciones del portafolio",
     languageTitle: "/Idioma",
@@ -124,15 +153,19 @@ const languages: Record<Language, {
     githubTitle: "/Atividade no GitHub",
     githubNavTitle: "/GitHub",
     githubDescription: "Contribuições diárias registradas no último ano.",
-    githubWindow: "ÚLTIMOS 12 MESES",
+    githubTotalSingular: "contribuição no último ano",
+    githubTotalPlural: "contribuições no último ano",
+    githubWeekdays: { monday: "seg", wednesday: "qua", friday: "sex" },
     activityLess: "Menos",
     activityMore: "Mais",
     githubProfile: "Ver perfil",
+    contributionSingular: "contribuição",
+    contributionPlural: "contribuições",
     contactPrompt: "./contato",
     contactTitle: "/Contato",
     certificationsTitle: "/Certificações",
     contactLabel: "Links de contato",
-    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶 · Portfólio 2026",
+    footer: "𝐻𝓊𝑔𝑜 𝒬𝓊𝑒𝓈𝒶𝒹𝒶",
     backToTop: "VOLTAR AO TOPO ↑",
     navLabel: "Seções do portfólio",
     languageTitle: "/Linguagem",
@@ -151,7 +184,62 @@ export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
   const [languageOpen, setLanguageOpen] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
+  const [contributionDays, setContributionDays] = useState<ContributionDay[]>([]);
+  const [hoveredContribution, setHoveredContribution] = useState<HoveredContribution | null>(null);
   const content = languages[language];
+  const totalContributions = contributionDays.reduce((total, day) => total + day.count, 0);
+  const contributionMonths = [...contributionDays]
+    .sort((firstDay, secondDay) => firstDay.date.localeCompare(secondDay.date))
+    .reduce<Array<{ label: string; left: number }>>((months, day, index, days) => {
+      if (index === 0 || day.date.slice(0, 7) !== days[index - 1].date.slice(0, 7)) {
+        const locale = language === "pt" ? "pt-BR" : language === "es" ? "es-ES" : "en-US";
+        const label = new Intl.DateTimeFormat(locale, { month: "short", timeZone: "UTC" }).format(new Date(`${day.date}T12:00:00Z`));
+        months.push({ label, left: Math.min(day.x, 633) });
+      }
+
+      return months;
+    }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/api/github-contributions", { signal: controller.signal })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Contribution data is unavailable");
+        }
+
+        return response.json();
+      })
+      .then(data => setContributionDays(data.days as ContributionDay[]))
+      .catch(() => undefined);
+
+    return () => controller.abort();
+  }, []);
+
+  function formatContributionTooltip(day: ContributionDay) {
+    const [year, month, dayOfMonth] = day.date.split("-");
+    const date = `${dayOfMonth}/${month}/${year.slice(-2)}`;
+    const contributionLabel = day.count === 1 ? content.contributionSingular : content.contributionPlural;
+
+    return `${day.count} ${contributionLabel} · ${date}`;
+  }
+
+  function showContributionTooltip(event: ReactMouseEvent<HTMLSpanElement>, text: string) {
+    const card = event.currentTarget.closest(".github-activity-card");
+
+    if (!card) {
+      return;
+    }
+
+    const cellBounds = event.currentTarget.getBoundingClientRect();
+    const cardBounds = card.getBoundingClientRect();
+    setHoveredContribution({
+      text,
+      left: cellBounds.left + cellBounds.width / 2 - cardBounds.left,
+      top: cellBounds.top - cardBounds.top
+    });
+  }
 
   useEffect(() => {
     function blockContextMenu(event: MouseEvent) {
@@ -271,14 +359,50 @@ export default function Home() {
         <div className="terminal-prompt"><span>hugo@portfolio</span>:~$ {content.githubPrompt}</div>
         <h2>{content.githubTitle}</h2>
         <p className="github-description">{content.githubDescription}</p>
+        <div className="github-contribution-summary">
+          <span>{totalContributions} {totalContributions === 1 ? content.githubTotalSingular : content.githubTotalPlural}</span>
+          <a href="https://github.com/Thy281" target="_blank" rel="noreferrer">{content.githubProfile} ↗</a>
+        </div>
         <div className="github-activity-card">
-          <div className="github-card-header">
-            <span>{content.githubWindow}</span>
-            <a href="https://github.com/Thy281" target="_blank" rel="noreferrer">{content.githubProfile} ↗</a>
-          </div>
           <div className="github-calendar-scroll">
-            <div className="github-calendar" role="img" aria-label={content.githubDescription} />
+            <div className="github-calendar" role="group" aria-label={content.githubDescription}>
+              <div className="github-calendar-months" aria-hidden="true">
+                {contributionMonths.map((month, index) => <span className="github-calendar-month" key={`${month.label}-${index}`} style={{ left: month.left }}>{month.label}</span>)}
+              </div>
+              <div className="github-calendar-weekdays" aria-hidden="true">
+                <span className="github-calendar-weekday monday">{content.githubWeekdays.monday}</span>
+                <span className="github-calendar-weekday wednesday">{content.githubWeekdays.wednesday}</span>
+                <span className="github-calendar-weekday friday">{content.githubWeekdays.friday}</span>
+              </div>
+              {contributionDays.map(day => {
+                const tooltip = formatContributionTooltip(day);
+
+                return (
+                  <span
+                    className={`github-contribution-cell activity-level-${day.level}`}
+                    key={day.date}
+                    role="img"
+                    aria-label={tooltip}
+                    aria-describedby={hoveredContribution?.text === tooltip ? "github-contribution-tooltip" : undefined}
+                    title={tooltip}
+                    style={{ left: day.x, top: day.y, width: day.width, height: day.height }}
+                    onMouseEnter={event => showContributionTooltip(event, tooltip)}
+                    onMouseLeave={() => setHoveredContribution(null)}
+                  />
+                );
+              })}
+            </div>
           </div>
+          {hoveredContribution && (
+            <div
+              className="github-hover-tooltip"
+              id="github-contribution-tooltip"
+              role="tooltip"
+              style={{ left: hoveredContribution.left, top: hoveredContribution.top }}
+            >
+              {hoveredContribution.text}
+            </div>
+          )}
           <div className="github-calendar-legend">
             <span>{content.activityLess}</span>
             <div className="activity-scale" aria-hidden="true">
@@ -304,6 +428,10 @@ export default function Home() {
           <a href="https://www.linkedin.com/in/hugo-quesada-5999bb355/" target="_blank" rel="noreferrer">
             <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.43v6.31ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.44c.98 0 1.79-.77 1.79-1.72V1.72C24 .77 23.19 0 22.21 0h.01Z" /></svg>
             LinkedIn
+          </a>
+          <a href="https://x.com/OThykkj75158" target="_blank" rel="noreferrer">
+            <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.658l-5.214-6.817-5.967 6.817H1.68l7.73-8.835L1.254 2.25h6.827l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+            X / Twitter
           </a>
         </nav>
         <div className="footer-bottom"><span>{content.footer}</span><a href="#inicio">{content.backToTop}</a></div>
