@@ -17,6 +17,14 @@ const languages: Record<Language, {
   projectsLink: string;
   toolsPrompt: string;
   toolsTitle: string;
+  githubPrompt: string;
+  githubTitle: string;
+  githubNavTitle: string;
+  githubDescription: string;
+  githubWindow: string;
+  activityLess: string;
+  activityMore: string;
+  githubProfile: string;
   contactPrompt: string;
   contactTitle: string;
   certificationsTitle: string;
@@ -40,6 +48,14 @@ const languages: Record<Language, {
     projectsLink: "See all projects",
     toolsPrompt: "cat tools.txt",
     toolsTitle: "/Tools",
+    githubPrompt: "gh contributions Thy281",
+    githubTitle: "/GitHub Activity",
+    githubNavTitle: "/GitHub",
+    githubDescription: "Daily contribution activity from the past year.",
+    githubWindow: "LAST 12 MONTHS",
+    activityLess: "Less",
+    activityMore: "More",
+    githubProfile: "View profile",
     contactPrompt: "./contact",
     contactTitle: "/Contact",
     certificationsTitle: "/Certifications",
@@ -68,6 +84,14 @@ const languages: Record<Language, {
     projectsLink: "Ver todos los proyectos",
     toolsPrompt: "cat herramientas.txt",
     toolsTitle: "/Herramientas",
+    githubPrompt: "gh contributions Thy281",
+    githubTitle: "/Actividad en GitHub",
+    githubNavTitle: "/GitHub",
+    githubDescription: "Contribuciones diarias registradas durante el último año.",
+    githubWindow: "ÚLTIMOS 12 MESES",
+    activityLess: "Menos",
+    activityMore: "Más",
+    githubProfile: "Ver perfil",
     contactPrompt: "./contacto",
     contactTitle: "/Contacto",
     certificationsTitle: "/Certificaciones",
@@ -96,6 +120,14 @@ const languages: Record<Language, {
     projectsLink: "Ver todos os projetos",
     toolsPrompt: "cat ferramentas.txt",
     toolsTitle: "/Ferramentas",
+    githubPrompt: "gh contributions Thy281",
+    githubTitle: "/Atividade no GitHub",
+    githubNavTitle: "/GitHub",
+    githubDescription: "Contribuições diárias registradas no último ano.",
+    githubWindow: "ÚLTIMOS 12 MESES",
+    activityLess: "Menos",
+    activityMore: "Mais",
+    githubProfile: "Ver perfil",
     contactPrompt: "./contato",
     contactTitle: "/Contato",
     certificationsTitle: "/Certificações",
@@ -173,6 +205,7 @@ export default function Home() {
             <a href="#sobre">{content.aboutTitle}</a>
             <a href="#projetos">{content.projectsTitle}</a>
             <a href="#tools">{content.toolsTitle}</a>
+            <a href="#github">{content.githubNavTitle}</a>
             <a href="#contato">{content.contactTitle}</a>
             <a href="https://www.linkedin.com/in/hugo-quesada-5999bb355/details/certifications/" target="_blank" rel="noreferrer">{content.certificationsTitle}</a>
             <div className="language-menu">
@@ -232,6 +265,32 @@ export default function Home() {
         <div className="terminal-prompt"><span>hugo@portfolio</span>:~$ {content.toolsPrompt}</div>
         <h2>{content.toolsTitle}</h2>
         <p>Python · Pandas · Scikit-learn · Streamlit · MLflow · SQL</p>
+      </section>
+
+      <section className="github-section" id="github">
+        <div className="terminal-prompt"><span>hugo@portfolio</span>:~$ {content.githubPrompt}</div>
+        <h2>{content.githubTitle}</h2>
+        <p className="github-description">{content.githubDescription}</p>
+        <div className="github-activity-card">
+          <div className="github-card-header">
+            <span>{content.githubWindow}</span>
+            <a href="https://github.com/Thy281" target="_blank" rel="noreferrer">{content.githubProfile} ↗</a>
+          </div>
+          <div className="github-calendar-scroll">
+            <div className="github-calendar" role="img" aria-label={content.githubDescription} />
+          </div>
+          <div className="github-calendar-legend">
+            <span>{content.activityLess}</span>
+            <div className="activity-scale" aria-hidden="true">
+              <span className="activity-square activity-level-0" />
+              <span className="activity-square activity-level-1" />
+              <span className="activity-square activity-level-2" />
+              <span className="activity-square activity-level-3" />
+              <span className="activity-square activity-level-4" />
+            </div>
+            <span>{content.activityMore}</span>
+          </div>
+        </div>
       </section>
 
       <footer className="site-footer" id="contato">

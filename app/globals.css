@@ -5,6 +5,11 @@
   --muted: #929292;
   --quiet: #696969;
   --line: #292929;
+  --activity-0: #202020;
+  --activity-1: #c6e48b;
+  --activity-2: #7bc96f;
+  --activity-3: #239a3b;
+  --activity-4: #196127;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
@@ -15,6 +20,11 @@
   --muted: #626662;
   --quiet: #818681;
   --line: #d8dbd6;
+  --activity-0: #eeeeee;
+  --activity-1: #c6e48b;
+  --activity-2: #7bc96f;
+  --activity-3: #239a3b;
+  --activity-4: #196127;
 }
 
 * { box-sizing: border-box; }
@@ -79,7 +89,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
 
 .language-option-button { text-align: right; white-space: nowrap; }
 
-.about-section, .projects-section, .stack-section { margin-bottom: 32px; padding-bottom: 31px; border-bottom: 1px solid var(--line); }
+.about-section, .projects-section, .stack-section, .github-section { margin-bottom: 32px; padding-bottom: 31px; border-bottom: 1px solid var(--line); }
 
 .terminal-prompt { margin-bottom: 19px; color: var(--quiet); font-size: 11px; }
 
@@ -88,6 +98,34 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
 .page-shell h2 { margin: 0 0 13px; color: var(--muted); font: 700 11px/1.4 var(--font-mono); letter-spacing: .14em; }
 
 .about-section > p, .stack-section > p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+
+.github-description { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+
+.github-activity-card { padding: 15px 17px 12px; border: 1px solid var(--line); }
+
+.github-card-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 11px; border-bottom: 1px solid var(--line); color: var(--quiet); font-size: 9px; letter-spacing: .08em; }
+
+.github-card-header a { color: var(--muted); text-decoration: none; letter-spacing: 0; }
+
+.github-card-header a:hover { color: var(--foreground); }
+
+.github-calendar-scroll { overflow-x: auto; padding: 12px 0 5px; }
+
+.github-calendar { width: 663px; height: 104px; background-image: url("https://ghchart.rshah.org/Thy281"); background-repeat: no-repeat; background-size: 663px 104px; }
+
+:root:not([data-theme="light"]) .github-calendar { filter: invert(1) hue-rotate(180deg); }
+
+.github-calendar-legend { display: flex; align-items: center; justify-content: flex-end; gap: 7px; color: var(--quiet); font-size: 9px; }
+
+.activity-scale { display: inline-flex; align-items: center; gap: 3px; }
+
+.activity-square { width: 9px; height: 9px; border: 1px solid var(--line); }
+
+.activity-level-0 { background: var(--activity-0); }
+.activity-level-1 { background: var(--activity-1); }
+.activity-level-2 { background: var(--activity-2); }
+.activity-level-3 { background: var(--activity-3); }
+.activity-level-4 { background: var(--activity-4); }
 
 .project-list { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
 
@@ -127,7 +165,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
 }
 
 @supports (animation-timeline: view()) {
-  .about-section, .projects-section, .stack-section, .site-footer { animation: section-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 26%; }
+  .about-section, .projects-section, .stack-section, .github-section, .site-footer { animation: section-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 26%; }
 }
 
 @media (max-width: 600px) {
@@ -145,7 +183,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
   .email-copy-button { font-size: 9px; }
   .language-menu { font-size: 9px; }
   .terminal-prompt { font-size: 10px; }
-  .about-section, .projects-section, .stack-section { margin-bottom: 28px; padding-bottom: 27px; }
+  .about-section, .projects-section, .stack-section, .github-section { margin-bottom: 28px; padding-bottom: 27px; }
+  .github-activity-card { padding: 12px 10px 10px; }
   .project-list { gap: 17px; }
   .project-row { grid-template-columns: 1fr; gap: 1px; }
   .project-separator { display: none; }
