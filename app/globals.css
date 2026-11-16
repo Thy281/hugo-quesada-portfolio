@@ -89,7 +89,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
 
 .language-option-button { text-align: right; white-space: nowrap; }
 
-.about-section, .projects-section, .stack-section, .github-section { margin-bottom: 32px; padding-bottom: 31px; border-bottom: 1px solid var(--line); }
+.about-section, .main-project-section, .projects-section, .stack-section, .github-section { margin-bottom: 32px; padding-bottom: 31px; border-bottom: 1px solid var(--line); }
 
 .terminal-prompt { margin-bottom: 19px; color: var(--quiet); font-size: 11px; }
 
@@ -98,6 +98,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
 .page-shell h2 { margin: 0 0 13px; color: var(--muted); font: 700 11px/1.4 var(--font-mono); letter-spacing: .14em; }
 
 .about-section > p, .stack-section > p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+
+.main-project-name { display: inline-block; margin-bottom: 11px; color: var(--foreground); font-size: 15px; font-weight: 700; }
+
+.main-project-section > p { max-width: 770px; margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+
+.main-project-stack { color: var(--quiet); font-size: 10px; }
 
 .github-description { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
 
@@ -179,7 +185,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
 }
 
 @supports (animation-timeline: view()) {
-  .about-section, .projects-section, .stack-section, .github-section, .site-footer { animation: section-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 26%; }
+  .about-section, .main-project-section, .projects-section, .stack-section, .github-section, .site-footer { animation: section-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 26%; }
 }
 
 @media (max-width: 600px) {
@@ -197,7 +203,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
   .email-copy-button { font-size: 9px; }
   .language-menu { font-size: 9px; }
   .terminal-prompt { font-size: 10px; }
-  .about-section, .projects-section, .stack-section, .github-section { margin-bottom: 28px; padding-bottom: 27px; }
+  .about-section, .main-project-section, .projects-section, .stack-section, .github-section { margin-bottom: 28px; padding-bottom: 27px; }
   .github-activity-card { padding: 12px 10px 10px; }
   .github-contribution-summary { width: 100%; font-size: 11px; }
   .project-list { gap: 17px; }

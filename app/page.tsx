@@ -32,6 +32,9 @@ const languages: Record<Language, {
   projectsPrompt: string;
   projectsTitle: string;
   projectsLink: string;
+  mainProjectTitle: string;
+  mainProjectPrompt: string;
+  mainProjectDescription: string;
   toolsPrompt: string;
   toolsTitle: string;
   githubPrompt: string;
@@ -67,6 +70,9 @@ const languages: Record<Language, {
     projectsPrompt: "ls ./projects",
     projectsTitle: "/Projects",
     projectsLink: "See all projects",
+    mainProjectTitle: "/Main Project",
+    mainProjectPrompt: "cat ./projects/FinComplaint-ML/README.md",
+    mainProjectDescription: "A retrospective machine learning study of late responses to consumer finance complaints. Uses historical CFPB data, temporal train/test/out-of-time splits, and MLflow to track experiments.",
     toolsPrompt: "cat tools.txt",
     toolsTitle: "/Tools",
     githubPrompt: "gh contributions Thy281",
@@ -94,7 +100,6 @@ const languages: Record<Language, {
     projects: [
       { name: "modelo-diabetes", description: "Educational classification project built with Python and Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Regression model for home price predictions.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
-      { name: "FinComplaint-ML", description: "Exploratory analysis of consumer finance complaints.", stack: "Python · Pandas · Visualization", href: "https://github.com/Thy281/FinComplaint-ML" },
       { name: "sensor-polichinelo", description: "Computer vision app that detects and counts jumping jacks with Python and MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
     ]
   },
@@ -107,6 +112,9 @@ const languages: Record<Language, {
     projectsPrompt: "ls ./proyectos",
     projectsTitle: "/Proyectos",
     projectsLink: "Ver todos los proyectos",
+    mainProjectTitle: "/Proyecto principal",
+    mainProjectPrompt: "cat ./proyectos/FinComplaint-ML/README.md",
+    mainProjectDescription: "Estudio retrospectivo de machine learning sobre respuestas tardías a reclamaciones financieras. Usa datos históricos del CFPB, división temporal de entrenamiento/prueba/fuera de tiempo y MLflow para registrar experimentos.",
     toolsPrompt: "cat herramientas.txt",
     toolsTitle: "/Herramientas",
     githubPrompt: "gh contributions Thy281",
@@ -134,7 +142,6 @@ const languages: Record<Language, {
     projects: [
       { name: "modelo-diabetes", description: "Proyecto educativo de clasificación con Python y Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Modelo de regresión para predecir precios de viviendas.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
-      { name: "FinComplaint-ML", description: "Análisis exploratorio de quejas financieras de consumidores.", stack: "Python · Pandas · Visualización", href: "https://github.com/Thy281/FinComplaint-ML" },
       { name: "sensor-polichinelo", description: "Aplicación de visión por computadora que detecta y cuenta saltos de tijera con Python y MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
     ]
   },
@@ -147,6 +154,9 @@ const languages: Record<Language, {
     projectsPrompt: "ls ./projetos",
     projectsTitle: "/Projetos",
     projectsLink: "Ver todos os projetos",
+    mainProjectTitle: "/Projeto principal",
+    mainProjectPrompt: "cat ./projetos/FinComplaint-ML/README.md",
+    mainProjectDescription: "Estudo retrospectivo de machine learning sobre respostas fora do prazo a reclamações financeiras. Usa dados históricos do CFPB, divisão temporal entre treino/teste/fora do tempo e MLflow para registrar experimentos.",
     toolsPrompt: "cat ferramentas.txt",
     toolsTitle: "/Ferramentas",
     githubPrompt: "gh contributions Thy281",
@@ -174,7 +184,6 @@ const languages: Record<Language, {
     projects: [
       { name: "modelo-diabetes", description: "Projeto educacional de classificação com Python e Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Modelo de regressão para previsão de preços de imóveis.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
-      { name: "FinComplaint-ML", description: "Análise exploratória de reclamações financeiras de consumidores.", stack: "Python · Pandas · Visualização", href: "https://github.com/Thy281/FinComplaint-ML" },
       { name: "sensor-polichinelo", description: "Aplicação de visão computacional que detecta e conta polichinelos com Python e MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
     ]
   }
@@ -291,6 +300,7 @@ export default function Home() {
         <div className="top-bar-inner">
           <div className="section-nav">
             <a href="#sobre">{content.aboutTitle}</a>
+            <a href="#projeto-principal">{content.mainProjectTitle}</a>
             <a href="#projetos">{content.projectsTitle}</a>
             <a href="#tools">{content.toolsTitle}</a>
             <a href="#github">{content.githubNavTitle}</a>
@@ -329,6 +339,14 @@ export default function Home() {
         <div className="terminal-prompt"><span>hugo@portfolio</span>:~$ {content.aboutPrompt}</div>
         <h2>{content.aboutTitle}</h2>
         <p>{content.aboutText}</p>
+      </section>
+
+      <section className="main-project-section" id="projeto-principal">
+        <div className="terminal-prompt"><span>hugo@portfolio</span>:~$ {content.mainProjectPrompt}</div>
+        <h2>{content.mainProjectTitle}</h2>
+        <a className="main-project-name" href="https://github.com/Thy281/FinComplaint-ML" target="_blank" rel="noreferrer">FinComplaint-ML ↗</a>
+        <p>{content.mainProjectDescription}</p>
+        <span className="main-project-stack">Python · Pandas · Scikit-learn · XGBoost · MLflow</span>
       </section>
 
       <section className="projects-section" id="projetos">
