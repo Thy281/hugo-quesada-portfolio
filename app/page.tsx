@@ -98,6 +98,7 @@ const languages: Record<Language, {
     copyEmail: "Copy email",
     emailCopied: "Copied",
     projects: [
+      { name: "model-card-clusters", description: "Credit card customer segmentation with KMeans, MLflow experiments, and optional AWS S3 data loading.", stack: "Python · Scikit-learn · MLflow · AWS S3", href: "https://github.com/Thy281/model-card-clusters" },
       { name: "modelo-diabetes", description: "Educational classification project built with Python and Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Regression model for home price predictions.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
       { name: "sensor-polichinelo", description: "Computer vision app that detects and counts jumping jacks with Python and MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
@@ -140,6 +141,7 @@ const languages: Record<Language, {
     copyEmail: "Copiar correo",
     emailCopied: "Copiado",
     projects: [
+      { name: "model-card-clusters", description: "Segmentación de clientes de tarjetas de crédito con KMeans, experimentos en MLflow y lectura opcional de datos desde AWS S3.", stack: "Python · Scikit-learn · MLflow · AWS S3", href: "https://github.com/Thy281/model-card-clusters" },
       { name: "modelo-diabetes", description: "Proyecto educativo de clasificación con Python y Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Modelo de regresión para predecir precios de viviendas.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
       { name: "sensor-polichinelo", description: "Aplicación de visión por computadora que detecta y cuenta saltos de tijera con Python y MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
@@ -182,6 +184,7 @@ const languages: Record<Language, {
     copyEmail: "Copiar e-mail",
     emailCopied: "Copiado",
     projects: [
+      { name: "model-card-clusters", description: "Segmentação de clientes de cartão de crédito com KMeans, experimentos no MLflow e leitura opcional de dados no AWS S3.", stack: "Python · Scikit-learn · MLflow · AWS S3", href: "https://github.com/Thy281/model-card-clusters" },
       { name: "modelo-diabetes", description: "Projeto educacional de classificação com Python e Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Modelo de regressão para previsão de preços de imóveis.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
       { name: "sensor-polichinelo", description: "Aplicação de visão computacional que detecta e conta polichinelos com Python e MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
