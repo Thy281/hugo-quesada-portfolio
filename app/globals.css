@@ -101,7 +101,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--foreground); ou
 
 .main-project-name { display: inline-block; margin-bottom: 11px; color: var(--foreground); font-size: 15px; font-weight: 700; }
 
-.main-project-section > p { max-width: 770px; margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.main-project-entry + .main-project-entry { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+
+.main-project-entry > p { max-width: 770px; margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.8; }
 
 .main-project-stack { color: var(--quiet); font-size: 10px; }
 

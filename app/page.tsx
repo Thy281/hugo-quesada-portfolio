@@ -35,6 +35,7 @@ const languages: Record<Language, {
   mainProjectTitle: string;
   mainProjectPrompt: string;
   mainProjectDescription: string;
+  clustersProjectDescription: string;
   toolsPrompt: string;
   toolsTitle: string;
   githubPrompt: string;
@@ -70,9 +71,10 @@ const languages: Record<Language, {
     projectsPrompt: "ls ./projects",
     projectsTitle: "/Projects",
     projectsLink: "See all projects",
-    mainProjectTitle: "/Main Project",
-    mainProjectPrompt: "cat ./projects/FinComplaint-ML/README.md",
+    mainProjectTitle: "/Main Projects",
+    mainProjectPrompt: "ls ./projects/main",
     mainProjectDescription: "A retrospective machine learning study of late responses to consumer finance complaints. Uses historical CFPB data, temporal train/test/out-of-time splits, and MLflow to track experiments.",
+    clustersProjectDescription: "Credit card customer segmentation with KMeans, MLflow experiments, and optional AWS S3 data loading.",
     toolsPrompt: "cat tools.txt",
     toolsTitle: "/Tools",
     githubPrompt: "gh contributions Thy281",
@@ -98,7 +100,6 @@ const languages: Record<Language, {
     copyEmail: "Copy email",
     emailCopied: "Copied",
     projects: [
-      { name: "model-card-clusters", description: "Credit card customer segmentation with KMeans, MLflow experiments, and optional AWS S3 data loading.", stack: "Python · Scikit-learn · MLflow · AWS S3", href: "https://github.com/Thy281/model-card-clusters" },
       { name: "modelo-diabetes", description: "Educational classification project built with Python and Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Regression model for home price predictions.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
       { name: "sensor-polichinelo", description: "Computer vision app that detects and counts jumping jacks with Python and MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
@@ -113,9 +114,10 @@ const languages: Record<Language, {
     projectsPrompt: "ls ./proyectos",
     projectsTitle: "/Proyectos",
     projectsLink: "Ver todos los proyectos",
-    mainProjectTitle: "/Proyecto principal",
-    mainProjectPrompt: "cat ./proyectos/FinComplaint-ML/README.md",
+    mainProjectTitle: "/Proyectos principales",
+    mainProjectPrompt: "ls ./proyectos/principales",
     mainProjectDescription: "Estudio retrospectivo de machine learning sobre respuestas tardías a reclamaciones financieras. Usa datos históricos del CFPB, división temporal de entrenamiento/prueba/fuera de tiempo y MLflow para registrar experimentos.",
+    clustersProjectDescription: "Segmentación de clientes de tarjetas de crédito con KMeans, experimentos en MLflow y lectura opcional de datos desde AWS S3.",
     toolsPrompt: "cat herramientas.txt",
     toolsTitle: "/Herramientas",
     githubPrompt: "gh contributions Thy281",
@@ -141,7 +143,6 @@ const languages: Record<Language, {
     copyEmail: "Copiar correo",
     emailCopied: "Copiado",
     projects: [
-      { name: "model-card-clusters", description: "Segmentación de clientes de tarjetas de crédito con KMeans, experimentos en MLflow y lectura opcional de datos desde AWS S3.", stack: "Python · Scikit-learn · MLflow · AWS S3", href: "https://github.com/Thy281/model-card-clusters" },
       { name: "modelo-diabetes", description: "Proyecto educativo de clasificación con Python y Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Modelo de regresión para predecir precios de viviendas.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
       { name: "sensor-polichinelo", description: "Aplicación de visión por computadora que detecta y cuenta saltos de tijera con Python y MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
@@ -156,9 +157,10 @@ const languages: Record<Language, {
     projectsPrompt: "ls ./projetos",
     projectsTitle: "/Projetos",
     projectsLink: "Ver todos os projetos",
-    mainProjectTitle: "/Projeto principal",
-    mainProjectPrompt: "cat ./projetos/FinComplaint-ML/README.md",
+    mainProjectTitle: "/Projetos principais",
+    mainProjectPrompt: "ls ./projetos/principais",
     mainProjectDescription: "Estudo retrospectivo de machine learning sobre respostas fora do prazo a reclamações financeiras. Usa dados históricos do CFPB, divisão temporal entre treino/teste/fora do tempo e MLflow para registrar experimentos.",
+    clustersProjectDescription: "Segmentação de clientes de cartão de crédito com KMeans, experimentos no MLflow e leitura opcional de dados no AWS S3.",
     toolsPrompt: "cat ferramentas.txt",
     toolsTitle: "/Ferramentas",
     githubPrompt: "gh contributions Thy281",
@@ -184,7 +186,6 @@ const languages: Record<Language, {
     copyEmail: "Copiar e-mail",
     emailCopied: "Copiado",
     projects: [
-      { name: "model-card-clusters", description: "Segmentação de clientes de cartão de crédito com KMeans, experimentos no MLflow e leitura opcional de dados no AWS S3.", stack: "Python · Scikit-learn · MLflow · AWS S3", href: "https://github.com/Thy281/model-card-clusters" },
       { name: "modelo-diabetes", description: "Projeto educacional de classificação com Python e Streamlit.", stack: "Python · Scikit-learn · Streamlit", href: "https://github.com/Thy281/modelo-diabetes" },
       { name: "ModelPredictionHouse", description: "Modelo de regressão para previsão de preços de imóveis.", stack: "Python · MLflow · Streamlit", href: "https://github.com/Thy281/ModelPredictionHouse" },
       { name: "sensor-polichinelo", description: "Aplicação de visão computacional que detecta e conta polichinelos com Python e MediaPipe.", stack: "Python · MediaPipe · OpenCV", href: "https://github.com/Thy281/contador-polichinelo" }
@@ -356,9 +357,16 @@ export default function Home() {
       <section className="main-project-section" id="projeto-principal">
         <div className="terminal-prompt"><span>hugo@portfolio</span>:~$ {content.mainProjectPrompt}</div>
         <h2>{content.mainProjectTitle}</h2>
-        <a className="main-project-name" href="https://github.com/Thy281/FinComplaint-ML" target="_blank" rel="noreferrer">FinComplaint-ML ↗</a>
-        <p>{content.mainProjectDescription}</p>
-        <span className="main-project-stack">Python · Pandas · Scikit-learn · XGBoost · MLflow</span>
+        <div className="main-project-entry">
+          <a className="main-project-name" href="https://github.com/Thy281/FinComplaint-ML" target="_blank" rel="noreferrer">FinComplaint-ML ↗</a>
+          <p>{content.mainProjectDescription}</p>
+          <span className="main-project-stack">Python · Pandas · Scikit-learn · XGBoost · MLflow</span>
+        </div>
+        <div className="main-project-entry">
+          <a className="main-project-name" href="https://github.com/Thy281/model-card-clusters" target="_blank" rel="noreferrer">model-card-clusters ↗</a>
+          <p>{content.clustersProjectDescription}</p>
+          <span className="main-project-stack">Python · Scikit-learn · MLflow · AWS S3</span>
+        </div>
       </section>
 
       <section className="projects-section" id="projetos">
