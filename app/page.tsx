@@ -212,18 +212,27 @@ export default function Home() {
   useEffect(() => {
     const controller = new AbortController();
 
-    fetch("/api/github-contributions", { signal: controller.signal })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Contribution data is unavailable");
-        }
+    function refreshContributions() {
+      if (document.visibilityState === "hidden") return;
 
-        return response.json();
-      })
-      .then(data => setContributionDays(data.days as ContributionDay[]))
-      .catch(() => undefined);
+      fetch("/api/github-contributions", { signal: controller.signal, cache: "no-store" })
+        .then(response => {
+          if (!response.ok) throw new Error("Contribution data is unavailable");
+          return response.json();
+        })
+        .then(data => setContributionDays(data.days as ContributionDay[]))
+        .catch(() => undefined);
+    }
 
-    return () => controller.abort();
+    refreshContributions();
+    const interval = window.setInterval(refreshContributions, 60_000);
+    document.addEventListener("visibilitychange", refreshContributions);
+
+    return () => {
+      controller.abort();
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", refreshContributions);
+    };
   }, []);
 
   function formatContributionTooltip(day: ContributionDay) {

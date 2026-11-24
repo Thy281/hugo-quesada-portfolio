@@ -10,7 +10,7 @@ type ContributionDay = {
 
 export async function GET() {
   try {
-    const response = await fetch("https://github.com/users/Thy281/contributions", { next: { revalidate: 300 } });
+    const response = await fetch("https://github.com/users/Thy281/contributions", { cache: "no-store" });
 
     if (!response.ok) {
       return Response.json({ days: [] }, { status: 502 });
